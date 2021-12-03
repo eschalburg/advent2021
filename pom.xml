@@ -15,7 +15,7 @@
 
 
     <build>
-        <sourceDirectory>day1/src/java</sourceDirectory>
+        <sourceDirectory>src/java</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -33,7 +33,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>org.cosmiclovers.advent2021.day1.Main</mainClass>
+                            <mainClass>org.cosmiclovers.advent2021.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
