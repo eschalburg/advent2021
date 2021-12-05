@@ -8,7 +8,10 @@ public class Main {
     public static void main(String[] args) {
         int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 
-        String className = "org.cosmiclovers.advent2021.Day" + day;
+        //String className = "org.cosmiclovers.advent2021.Day" + day;
+
+        //temp
+        String className = "org.cosmiclovers.advent2021.Day4";
 
         try {
             Assignment a = (Assignment) Class.forName(className).newInstance();
