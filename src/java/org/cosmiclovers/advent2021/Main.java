@@ -4,7 +4,9 @@ import java.util.Calendar;
 
 public class Main {
     public static void main(String[] args) {
-        int day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        if (args.length < 2)
+            displayUsage();
+        
 
         String className = args[0];
 
@@ -16,6 +18,11 @@ public class Main {
             System.out.format("Could not load class %s, exiting.%n", className);
             e.printStackTrace();
         }
+    }
 
+    private static void displayUsage() {
+        System.out.format("Usage org.cosmiclovers.advent2021 <class name> <input file>%n");
+        System.out.format(" e.g., org.cosmiclovers.advent2021 org.cosmiclovers.advent2021.Day1 day1/test.txt");
+        System.exit(0);
     }
 }
