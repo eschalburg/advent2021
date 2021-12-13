@@ -2,11 +2,13 @@ package org.cosmiclovers.advent2021;
 
 import java.util.Calendar;
 
+import static java.util.Calendar.getInstance;
+
 public class Main {
     public static void main(String[] args) {
         if (args.length < 2)
             displayUsage();
-        
+
 
         String className = args[0];
 
