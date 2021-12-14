@@ -100,8 +100,11 @@ public class Day4 implements Assignment {
 
             for (Integer ball : balls) {
                 System.out.format("Processing ball %d.\n", ball);
-                Transporter check = checkBoards(ball, balls, boards, filledBoards);
+                //Transporter check = checkBoards(ball, balls, boards, filledBoards);
+                checkBoards(ball, balls, boards,filledBoards);
 
+                //Remove any winning boards
+                
                 //if (check != null)
                 //    return check;
             }
@@ -112,7 +115,7 @@ public class Day4 implements Assignment {
         return null;
     }
 
-    private Transporter checkBoards(int ball, List<Integer> balls, List<Integer[][]> boards, List<Boolean[][]> filledBoards) {
+    private void checkBoards(int ball, List<Integer> balls, List<Integer[][]> boards, List<Boolean[][]> filledBoards) {
         for (int i = 0; i < boards.size(); i++) {
             Integer[][] board = boards.get(i);
             Boolean[][] filledBoard = filledBoards.get(i);
@@ -123,7 +126,7 @@ public class Day4 implements Assignment {
                         filledBoard[row][col] = true;
                         if (checkBoard(filledBoard)) {
                             //This board just won
-                            System.out.format("Winning board!\n");
+                            //System.out.format("Winning board!\n");
 
                             //Calculate prize
                             int prize = 0;
@@ -136,25 +139,28 @@ public class Day4 implements Assignment {
                             }
                             prize *= ball;
                             Transporter winner = new Transporter(board, filledBoard, prize);
-                            winners.add(winner);
-                            return winner;
+                            //Can't win twice
+                            if (!winners.contains(winner))
+                                winners.add(winner);
+                            // I think this was causing me to miss the tie scenario - it would return before checking all other boards
+                            //return winner;
                         }
                     }
                 }
             }
         }
 
-        System.out.println("No one won.");
-        return null;
+        //System.out.println("No one won.");
+        //return null;
     }
 
     private boolean checkBoard(Boolean[][] board) {
-        System.out.format("Checking board: %s\n%s\n%s\n%s\n%s\n", Arrays.toString(board[0]), Arrays.toString(board[1]), Arrays.toString(board[2]),
-                Arrays.toString(board[3]), Arrays.toString(board[4]));
         for (int row = 0; row < 5; row++) {
             if (board[row][0] && board[row][1] && board[row][2] && board[row][3] && board[row][4]) {
                 // this is a winning row
-                System.out.format("Board wins on row %s\n", row);
+                //System.out.format("Checking board: %s\n%s\n%s\n%s\n%s\n", Arrays.toString(board[0]), Arrays.toString(board[1]), Arrays.toString(board[2]),
+                //        Arrays.toString(board[3]), Arrays.toString(board[4]));
+                //System.out.format("Board wins on row %s\n", row);
                 return true;
             }
         }
@@ -162,7 +168,9 @@ public class Day4 implements Assignment {
         for (int col = 0; col < 5; col++) {
             if (board[0][col] && board[1][col] && board[2][col] && board[3][col] && board[4][col]) {
                 //this is a winning column
-                System.out.format("Board wins on column %d\n", col);
+                //System.out.format("Checking board: %s\n%s\n%s\n%s\n%s\n", Arrays.toString(board[0]), Arrays.toString(board[1]), Arrays.toString(board[2]),
+                //        Arrays.toString(board[3]), Arrays.toString(board[4]));
+                //System.out.format("Board wins on column %d\n", col);
                 return true;
             }
         }
@@ -229,6 +237,24 @@ public class Day4 implements Assignment {
 
         public void setPrize(int prize) {
             this.prize = prize;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Transporter that = (Transporter) o;
+            return prize == that.prize &&
+                    Arrays.equals(ints, that.ints) &&
+                    Arrays.equals(bools, that.bools);
+        }
+
+        @Override
+        public int hashCode() {
+            int result = Objects.hash(prize);
+            result = 31 * result + Arrays.hashCode(ints);
+            result = 31 * result + Arrays.hashCode(bools);
+            return result;
         }
     }
 }
